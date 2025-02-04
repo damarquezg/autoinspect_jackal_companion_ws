@@ -1,0 +1,80 @@
+################
+## Core config
+enable_at_launch: true # either wait for an initial pose or start immediately
+registration_config_file : "$(find icp_odometry)/config/icp_odometry_config.yaml"
+# The following path is set in the launch file instead of loaded from this file
+# map_from_file_path: "/home/user/vilens_slam_data/online_slam_output/combined_cloud.ply"
+load_map_from_file: true
+localize_against_prior_map: true
+localize_against_built_map: false # implicitly localise in build map
+merge_registered_clouds_to_map: false
+crop_map_around_base: 60.0 # rectangular box 2x in each direction
+remove_pitch_roll_alignment: false # force the registration to be aligned to gravity. This needs to be true for anymal, false for frontier
+
+################
+## Loop Closure (needed for legacy)
+loop_closure_verification_method: "points" # planes (3 matching planes of 1000pts) or "points" (10000points)
+loop_closure_min_plane_size: 1000
+loop_closure_min_points_size: 10000 # lower wont find many loops when capping at 20000 inputs
+loop_closure_adjacency_dilation: 11
+
+################
+## Processing from files
+# either 'ros' (default), 'raw' (PCDs at 2hz, vo/legodom) or 'registered' (1 per 2m after vilens SLAM) or 'ros_no_icp' (skips icp, obvs)
+input_source: ros
+write_registered_clouds_to_file: false
+# output in either map (true) or base (false, default)
+write_output_clouds_in_fixed_frame: false
+# folder containing clouds and a poses files - in either raw or registered format: newer_short_registered, frontier_new_college_long_registered
+# TIP: if you cannot find these files, the just replace with an empty string
+input_clouds_folder: "/null"
+# user pause at the end of certain sections of the system (offline only). leave empty for live operation
+offline_stop_for: "" # default: "". valid: "slam", "loopclosure", "odometry"
+# pause for this number of msec when in "registered" mode, to allow decoupled systems (VPR, NSM) to work.
+offline_wait_duration_usec: 0 # default: 0. suggested: 0.2sec = 200000
+
+################
+## ICP Odometry
+reading_dist_threshold: 2.0
+min_range: 0.50
+max_range: 50
+calculate_covariance: false
+point_covariance: 0.01
+prefilter_voxel_size: 0.08 # usally 0.15 outdoors. 0.08 in corsham mine worked well
+max_reference_cloud_size: 30000 # used for odometry and loop closure. use randomized downsample to achieve this. key control on computation
+max_reading_cloud_size: 30000
+
+local_map_dist_threshold_dense: 1.0 # min distance between each local map pose. should be >= reading_dist_threshold
+local_map_max_dist_dense: 8.0 # furthest distance back in odometry to find local map poses
+local_map_dist_threshold_sparse: 1.0
+local_map_max_dist_sparse: 8.0
+local_map_angle_threshold: 0.5
+local_map_add_last_scan: true # To add the latest registered scan to the map at all times. because FPS is low, this improves ICP stability
+local_map_max_height_dist: 3 # height difference threshold - for multi-floor environments
+
+################
+## Misc
+verbose: some # 'none', 'some', 'lots', 'fileio'. some is the default for doing a 'minimal live demo'
+accumulate_odometry_map: false
+odometry_map_voxel_leaf_size: 0.25 # Use 0.25 for realtime (faster) and 0.01 for creating final maps (slow)
+
+### Ros Node:
+lidar_topic: "/os_cloud_node/points_corrected"
+process_time_gap: 0.475 # min amount of time to leave between scans. effectively 2Hz
+
+## TF frames
+icp_fixed_frame : "odom_icp"
+icp_base_frame : "body_odom_icp"
+odometry_fixed_frame : "odom"
+odometry_base_frame : "base_link"
+use_odometry_prior: true
+lidar_frame: os_sensor
+
+# Generated with data_tools_algorithms get_tf.py
+B_r_BL: [0.120000000, 0.000000000, 0.243400000]
+q_BL: [0.000000000, 0.000000000, 0.707106781, 0.707106781]
+
+## Initial Position of base in prior map - used for localisation only.
+use_initial_pose: false
+W_r_WB_0: [0, 0, 0]
+W_q_WB_0: [0, 0, 0]

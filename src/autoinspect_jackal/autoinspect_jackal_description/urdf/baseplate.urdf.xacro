@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<robot name="jackal_baseplate" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find realsense2_description)/urdf/_d435i.urdf.xacro"/>
+    <xacro:include filename="$(find microstrain_inertial_description)/urdf/gx5_45.urdf.xacro"/>
+    <xacro:include filename="$(find hesai_description)/urdf/hesai_xt32.urdf.xacro"/>
+
+    <xacro:macro name="jackal_baseplate" params="parent:=base simulation:=false *origin">
+        <link name="jackal_baseplate">
+            <visual>
+                <material name="darkgrey">
+                    <color rgba="0.3 0.3 0.3 1"/>
+                </material>
+                <origin xyz="0 0 0" rpy="0 ${-pi/2} ${-pi/2}"/>
+                <geometry>
+                    <mesh filename="package://autoinspect_jackal_description/urdf/meshes/baseplate.stl"/>
+                </geometry>
+            </visual>
+        </link>
+        <joint name="${parent}_to_mount" type="fixed">
+            <parent link="${parent}"/>
+            <child link="jackal_baseplate"/>
+            <xacro:insert_block name="origin" />
+        </joint>
+
+        <link name="jackal_plate">
+            <visual>
+                <material name="lightgrey">
+                    <color rgba="0.8 0.8 0.8 1"/>
+                </material>
+                <origin xyz="0 0 0" rpy="0 ${-pi/2} ${-pi/2}"/>
+                <geometry>
+                    <mesh filename="package://autoinspect_jackal_description/urdf/meshes/plate.stl"/>
+                </geometry>
+            </visual>
+        </link>
+        <joint name="jackal_plate_to_jackal_baseplate" type="fixed">
+            <parent link="jackal_baseplate"/>
+            <child link="jackal_plate"/>
+        </joint>
+
+        <xacro:hesai_xt32_device name="pandar" parent="jackal_baseplate" simulation="${simulation}">
+            <origin xyz="0 0 0.003" rpy="0 0 0" />
+        </xacro:hesai_xt32_device>
+
+        <xacro:gx5_45 name="gx5_45" parent="jackal_baseplate">
+            <origin xyz="0 0 0" rpy="0 ${pi} 0" />
+        </xacro:gx5_45>
+
+        <xacro:if value="${simulation}">
+            <gazebo reference="gx5_45_center">
+                <gravity>true</gravity>
+                <sensor type="imu" name="gx5_45_imu">
+                    <always_on>true</always_on>
+                    <update_rate>500.0</update_rate>
+                    <visualize>true</visualize>
+                    <topic>/microstrain/imu</topic>
+                    <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+                        <topicName>/microstrain/imu/data</topicName>
+                        <bodyName>gx5_45_center</bodyName>
+                        <updateRateHZ>500.0</updateRateHZ>
+                        <gaussianNoise>0.0025</gaussianNoise>
+                        <xyzOffset>0 0 0</xyzOffset>
+                        <rpyOffset>0 0 0</rpyOffset>
+                        <frameName>gx5_45_center</frameName>
+                    </plugin>
+                    <pose>0 0 0 0 0 0</pose>
+                </sensor>
+            </gazebo>
+        </xacro:if>
+
+        <xacro:sensor_d435i parent="jackal_baseplate">
+            <origin xyz="0.125 0 -0.0275" rpy="0 0 0"/>
+        </xacro:sensor_d435i>
+    </xacro:macro>
+</robot>
+

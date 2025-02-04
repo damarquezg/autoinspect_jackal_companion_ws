@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<launch>
+  <node name="tf_bridge_odom_vilens_map" pkg="icp_odometry_ros" type="tf_bridge" output="screen">
+    <param name="icp_topic"               type="string" value="/vilens_slam/slam_last_pose" />
+    <param name="icp_fixed_frame"         type="string" value="shadow_map" />
+    <param name="odometry_fixed_frame"    type="string" value="odom_vilens" />
+    <param name="odometry_base_frame"     type="string" value="base_vilens_optimized" />
+    <param name="remove_pitch_roll"       type="bool"   value="false" />
+    <param name="future_offset_time"      type="double" value="1.0" />
+    <param name="frame_publish_frequency" type="double" value="10" />
+  </node>
+</launch>

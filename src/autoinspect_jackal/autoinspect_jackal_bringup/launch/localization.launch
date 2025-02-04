@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+  <arg name="map_file"/>
+
+  <!-- Launch all of the sensor drivers -->
+  <!-- Hesai Pandar lidar -->
+  <include file="$(find autoinspect_jackal_bringup)/launch/sensors/hesai.launch"/>
+  <!-- Microstrain IMU -->
+  <include file="$(find autoinspect_jackal_bringup)/launch/sensors/microstrain.launch"/>
+  <!-- Realsense camera -->
+  <include file="$(find autoinspect_jackal_bringup)/launch/sensors/realsense.launch"/>
+  <!-- Project 3D pointcloud to a 2D laserscan -->
+  <include file="$(find autoinspect_jackal_bringup)/launch/sensors/laserscan.launch"/>
+
+  <!-- Mapping -->
+  <include file="$(find autoinspect_jackal_bringup)/launch/navigation/move_base.launch"/>
+  <include file="$(find autoinspect_jackal_bringup)/launch/localization/amcl.launch">
+    <arg name="map_file" value="$(arg map_file)"/>
+    <arg name="scan_topic" value="/scan"/>
+  </include>
+
+</launch>

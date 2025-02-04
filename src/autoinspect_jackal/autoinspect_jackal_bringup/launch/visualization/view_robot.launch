@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Launch RViz visualization of the robot and its environment -->
+
+  <!-- RViz configuration to be used -->
+  <arg name="config_file" default="$(find autoinspect_jackal_bringup)/rviz/navigation.rviz"/>
+
+  <!-- Launch RViz visualization node -->
+  <node name="rviz_navigation" pkg="rviz" type="rviz" args="-d $(arg config_file)" />
+
+</launch>

@@ -1,0 +1,35 @@
+## Basic
+detection_method: "omni" # either omni and/or tag
+registration_config_file : "$(find autoinspect_jackal_bringup)/config/localization/vilens_loco/icp_config_loco.yaml"
+
+# Identity: input clouds are in base frame, map clouds are in base frame
+B_r_BL: [0.0, 0.000000000, 0.0]
+q_BL: [0.0, 0.0, 0.0, 1.0]
+
+lidar_topic: "/vilens/point_cloud_transformed_processed"
+# 8000-10000 for omni matching. 5000 is fine for tag localization
+loop_closure_min_points_size: 8000 # default: 11000; 4000 is very low to enable false loop closure checking
+
+process_one_in: 5
+map_frame: "map"
+mode: "alwayson" # alwayson, ondemand, offinitially
+test_mode: "running_live" # test_single, test_batch, running_live
+
+# call a service to send the pose to another programme
+enable_service: false
+
+match_to_prior_map: true
+# The following path is set in the launch file instead of loaded from this file
+#prior_map_folder: "/home/user/vilens_slam_data/online_slam_output"
+
+geometric_min_delta_trans: 1.4
+omni_dist_thres: 0.3
+omni_lidar_height: 2.0
+omni_roof_height: 5.0
+
+# Parameters used by Tag Detection
+# Transform from base frame (where the pointcloud will be from) and the forward camera
+# rosrun data_tools_algorithms get_tf.py base_vilens cam_front_T_BC
+# TODO: find these values from the URDF
+L_r_LC0: [0,0,0]
+q_LC0: [0.500, -0.500, 0.500, -0.500]

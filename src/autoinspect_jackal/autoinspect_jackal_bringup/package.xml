@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>autoinspect_jackal_bringup</name>
+  <version>0.0.0</version>
+  <description>Package containing configuration and launch files for the AutoInspect Jackal</description>
+
+  <maintainer email="tobit@robots.ox.ac.uk">todo</maintainer>
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <exec_depend>autoinspect_jackal_description</exec_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>gazebo_worlds_drs</exec_depend>
+  <exec_depend>hector_trajectory_server</exec_depend>
+  <exec_depend>icp_odometry_ros</exec_depend>
+  <exec_depend>jackal_control</exec_depend>
+  <exec_depend>jackal_gazebo</exec_depend>
+  <exec_depend>map_server</exec_depend>
+  <exec_depend>move_base</exec_depend>
+  <exec_depend>ori_topological_jackal</exec_depend>
+  <exec_depend>pointcloud_to_laserscan</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>rviz</exec_depend>
+  <exec_depend>tf</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>vilens_loco</exec_depend>
+  <exec_depend>vilens_ros</exec_depend>
+  <exec_depend>vilens_slam</exec_depend>
+
+  <export>
+  </export>
+</package>

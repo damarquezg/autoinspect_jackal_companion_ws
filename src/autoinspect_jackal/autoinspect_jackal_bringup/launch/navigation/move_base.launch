@@ -1,0 +1,21 @@
+<launch>
+   <!-- Launch move base with the parameters for the Jackal -->
+
+  <node name="move_base" pkg="move_base" type="move_base" respawn="false" output="screen">
+
+    <rosparam file="$(find autoinspect_jackal_bringup)/config/navigation/move_base/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find autoinspect_jackal_bringup)/config/navigation/move_base/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    
+    <rosparam file="$(find autoinspect_jackal_bringup)/config/navigation/move_base/map_nav_params/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find autoinspect_jackal_bringup)/config/navigation/move_base/map_nav_params/global_costmap_params.yaml" command="load" />
+    
+    <rosparam file="$(find autoinspect_jackal_bringup)/config/navigation/move_base/base_local_planner_params.yaml" command="load" />
+    <rosparam file="$(find autoinspect_jackal_bringup)/config/navigation/move_base/move_base_params.yaml" command="load" />
+    
+    <param name="base_global_planner" type="string" value="navfn/NavfnROS" />
+    <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS"/>
+    
+    <remap from="odom" to="odometry/filtered" />
+  </node>
+
+</launch>

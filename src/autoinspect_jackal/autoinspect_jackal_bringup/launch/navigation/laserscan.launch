@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+  <!-- This launch file takes in a 3D pointcloud and outputs a 2D laser -->
+  <!-- This can be used for inserting obstacles into the local cost map -->
+
+  <arg name="pointcloud_topic" default="/hesai/pandar" />
+  <arg name="laser_topic" default="scan" />
+
+  <!-- Pointcloud to laser scanner -->
+  <node name="pointcloud_to_laserscan" pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node">
+    <param name="min_height" value="0.2"/>
+    <param name="max_height" value="1.0"/>
+    <param name="range_min" value="0.6"/>
+    <param name="target_frame" value="base_link"/>
+    <!-- A resolution that is too small (e.g. 0.001) can result in a segmentation fault of gmapping! -->
+    <param name="angle_increment" value="0.01"/>
+
+    <remap from="cloud_in" to="$(arg pointcloud_topic)"/>
+    <remap from="scan" to="$(arg laser_topic)"/>
+  </node>
+
+</launch>

@@ -1,0 +1,113 @@
+# This file is used when running vilens slam and providing input to it from vilens
+
+platform_id: 0
+
+## Basic
+map_frame : "shadow_map"
+map_base_frame: "base_map" # for simplicity in vilens_map this is "base"
+odom_frame : "odom_vilens"
+odom_base_frame: "base_vilens_optimized"
+
+################
+## ICP Registration:
+registration_config_file : "$(find autoinspect_jackal_bringup)/config/slam/icp_config_slam.yaml"
+map_from_file_path: ""
+load_map_from_file: false
+localize_against_prior_map: false
+# implicit loop closure when revisit known place - should always be false in this launch file
+localize_against_built_map: false
+merge_registered_clouds_to_map: true
+
+# rectangular box dimensions: value*2 x value*2
+crop_map_around_base: 15.0
+
+################
+## SLAM
+publish_marginal_covariance: false
+prior_info: [1.e+2, 1.e+2, 1.e+2, 1.e+2, 1.e+2, 1.e+2]
+odometry_info: [1.e+4, 1.e+4, 1.e+4, 1.e+6, 1.e+6, 1.e+6] # order: roll, pitch, yaw, x, y, z
+loop_closure_info: [1.e+2, 1.e+2, 1.e+2, 1.e+2, 1.e+2, 1.e+2]
+attitude_info: 6.66
+use_attitude_factors: true
+#loop_closure_noise: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5] # cauchy
+loop_closure_robust_method: "normal" # "normal", "sigmoid", "linear", "cauchy"
+
+loop_closure_proposal_method: "geometric" # choices: "geometric", "appearance" or "context" or combinations
+loop_closure_verification_method: "points" # planes (3 matching planes of 1000pts) or "points" (10000points)
+loop_closure_min_plane_size: 1000
+loop_closure_min_points_size: 10000 # lower wont find many loops when capping at 20000 inputs
+loop_closure_adjacency_dilation: 11
+# force the map to be aligned to gravity. This needs to be true for anymal, false for frontier
+remove_pitch_roll_alignment: false
+
+# resolution of output map. Use 0.25 for realtime (faster) and 0.01 for creating final maps (slow)
+odometry_map_voxel_leaf_size: 0.05
+maximum_loop_closure_radius: 3.0
+loop_closure_omni_lidar_height: 2.0
+loop_closure_omni_roof_height: 10000
+loop_closure_omni_use_pairwise_check: false
+loop_closure_num_random_candidates: 0
+
+pub_small_map_every_n_secs: 5 # publish small map to RViz every n seconds
+pub_small_map_skip_n_clouds: 3 # Skip n reference clouds when making small map
+pub_small_map_max_clouds: 50 # Max clouds to use for small map, overrides skip with num_clouds / pub_small_map_max_clouds
+pub_map_max_points: 1000000 # Maximum number of points allowed in published pointcloud
+
+################
+## Processing from files
+# either 'ros' (default) or 'registered' (1 per 2m)
+input_source: ros
+write_raw_clouds_to_file: false
+write_registered_clouds_to_file: false
+# output in either map (true) or base (false, default)
+write_output_clouds_in_fixed_frame: false
+# folder containing clouds and a poses files - in either raw or registered format: newer_short_registered, frontier_new_college_long_registered
+input_clouds_folder: "/null"
+prior_map_folder: ""
+
+################
+## Input Signals
+lidar_topic: "/vilens/point_cloud_transformed_processed"
+lidar_height: 0
+
+################
+## ICP Odometry
+reading_dist_threshold: 1.0
+min_range: 0.50
+max_range: 80
+prefilter_voxel_size: 0.15 # usally 0.15 outdoors. 0.08 in corsham mine worked well
+max_reference_cloud_size: 300000 # used for odometry and loop closure. use randomized downsample to achieve this. key control on computation
+max_reading_cloud_size: 30000
+
+# min distance between each local map pose. should be >= reading_dist_threshold
+local_map_dist_threshold_dense: 1.0
+local_map_max_dist_dense: 8.0 # furthest distance back in odometry to find local map poses
+local_map_dist_threshold_sparse: 1.0
+local_map_max_dist_sparse: 8.0
+
+# furthest distance back in odometry to find local map poses
+local_map_max_dist: 15.0
+local_map_angle_threshold: 0.5
+local_map_max_height_dist: 2.5 # height difference threshold - for multi-floor environments
+# To add the latest registered scan to the map at all times. because FPS is low, this improves ICP stability
+local_map_add_last_scan: true
+
+# 'none', 'some' or 'lots'. some is the default for doing a 'minimal live demo'. 'lots' doesnt work for large maps ... slam map too big
+verbose: some
+
+# user pause at the end of certain sections of the system (offline only). leave empty for live operation
+offline_stop_for: "" # default: "". valid: "slam", "loopclosure", "odometry"
+# pause for this number of msec when in "registered" mode, to allow decoupled systems (VPR, NSM) to work.
+offline_wait_duration_usec: 0 # default: 0. suggested: 0.2sec = 200000
+
+# write output as either "pcd" (binary, default) or "ply" (ascii)
+output_file_type: "pcd"
+
+enable_auto_logging: true
+
+gnss_frame: "gnss"
+gnss_topic: ""
+use_gnss_factors: false
+use_yaw_only_gnss: true
+num_gnss_meas_for_init: 10
+gnss_info: [1.e-3, 1.e-3, 1.e-6]

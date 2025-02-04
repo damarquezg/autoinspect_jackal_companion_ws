@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Spawn the Husky into Gazebo simulation -->
+  <!-- To a large part it is a copy of the jackal_gazebo/launch/spawn_jackal.launch
+       as that one spawns a fixed robot description which is incompatible with ours -->
+
+  <!-- Initial position of the robot inside the simulaton environment -->
+  <arg name="x" default="0.0"/>
+  <arg name="y" default="0.0"/>
+  <arg name="z" default="0.0"/>
+  <arg name="yaw" default="0.0"/>
+  <!-- Simulated or real robot -->
+  <arg name="simulation" default="true" />
+  <!-- Joystick control -->
+  <arg name="joystick" default="false" />
+
+  <!-- Load robot description -->
+  <include file="$(find autoinspect_jackal_description)/launch/description.launch" >
+    <arg name="simulation" value="$(arg simulation)" />
+  </include>
+
+  <!-- Load controllers -->
+  <include file="$(find jackal_control)/launch/control.launch"/>
+
+  <!-- Load teleoperation -->
+  <include file="$(find jackal_control)/launch/teleop.launch">
+    <arg name="joystick" value="$(arg joystick)" />
+  </include>
+
+  <!-- Spawn robot in gazebo -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
+        args="-x $(arg x)
+              -y $(arg y)
+              -z $(arg z)
+              -Y $(arg yaw)
+              -unpause
+              -urdf
+              -param robot_description
+              -model autoinspect_jackal"/>
+
+</launch>

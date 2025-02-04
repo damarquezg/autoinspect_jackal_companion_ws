@@ -1,0 +1,13 @@
+# Taken from https://github.com/ori-drs/frontier_logging/blob/frn-0016-config/config/vilens/frn-0013/frn-0013-microstrain-imu.yaml
+accelerometer_noise_sigma:            2.775e-3
+accelerometer_bias_random_walk_sigma: 1.7549e-5
+gyroscope_noise_sigma:                2.4683e-4
+gyroscope_bias_random_walk_sigma:     2.168e-6
+integration_covariance:               1e-8
+bias_acc_omega_int:                   1e-5
+W_g: [0, 0, -9.8067]
+
+max_acc_bias: 0.2
+max_gyr_bias: 0.2
+
+rate: 500

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Standalone launcher to visualize the robot model. -->
+
+  <!-- Simulated or real robot -->
+  <arg name="simulation" default="true"/>
+
+  <!-- Xacro URDF to be loaded -->
+  <include file="$(find autoinspect_jackal_description)/launch/description.launch">
+    <arg name="simulation" value="$(arg simulation)"/>
+  </include>
+
+  <!-- Joint state publisher GUI -->
+  <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+
+  <!-- RViz visualization -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find autoinspect_jackal_description)/rviz/model.rviz" />
+
+  <!-- Robot state publisher -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+</launch>

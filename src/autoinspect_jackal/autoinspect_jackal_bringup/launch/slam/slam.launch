@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+  <!-- Launch odometry and SLAM -->
+
+  <!-- Configuration file for Vilens -->
+  <arg name="vilens_config" default="$(find autoinspect_jackal_bringup)/config/odometry/vilens.yaml"/>
+  <!-- Configuration file for Vilens SLAM -->
+  <arg name="vilens_slam_config" default="$(find autoinspect_jackal_bringup)/config/slam/vilens_slam.yaml"/>
+  <!-- Launch RViz for visualization -->
+  <arg name="rviz" default="true"/>
+
+  <!-- Launch Vilens odometry -->
+  <node name="base_vilens_optimized_transform_publisher" pkg="tf2_ros" type="static_transform_publisher" 
+        args="0 0 0 0 0 0 1 base_vilens_optimized base" output="screen"/>
+  <include file="$(find autoinspect_jackal_bringup)/launch/odometry/tf_bridge_odom_vilens_odom_icp.launch"/>
+  <include file="$(find autoinspect_jackal_bringup)/launch/odometry/vilens.launch">
+    <arg name="vilens_config" value="$(arg vilens_config)"/>
+  </include>
+
+  <!-- Launch Vilens SLAM -->
+  <include file="$(find autoinspect_jackal_bringup)/launch/slam/tf_bridge_odom_vilens_map.launch"/>
+  <include file="$(find autoinspect_jackal_bringup)/launch/slam/vilens_slam.launch">
+    <arg name="vilens_slam_config" value="$(arg vilens_slam_config)"/>
+  </include>
+
+  <!-- Launch RViz visualization -->
+  <group if="$(arg rviz)">
+    <include file="$(find autoinspect_jackal_bringup)/launch/slam/vilens_rviz.launch"/>
+  </group>
+</launch>

@@ -1,0 +1,3 @@
+lidar_topic: "/hesai/pandar"
+lidar_frame: pandar
+

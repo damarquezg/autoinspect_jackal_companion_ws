@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Launch the RViz visualization of the robot -->
+
+  <node name="rviz_slam" pkg="rviz" type="rviz" args="-d $(find autoinspect_jackal_bringup)/rviz/vilens_slam.rviz" />
+</launch>

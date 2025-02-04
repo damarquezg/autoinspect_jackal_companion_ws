@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="simulation" default="false" />
+
+  <xacro:include filename="$(find autoinspect_jackal_description)/urdf/baseplate.urdf.xacro" />
+  <xacro:jackal_baseplate parent="front_mount" simulation="$(arg simulation)">
+    <origin xyz="0 0 0.01" rpy="0 0 0"/>
+  </xacro:jackal_baseplate>
+</robot>
+

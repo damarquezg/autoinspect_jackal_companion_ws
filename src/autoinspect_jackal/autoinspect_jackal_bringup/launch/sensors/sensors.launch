@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+  <!-- Launch all of the sensor drivers -->
+
+  <!-- Hesai Pandar lidar -->
+  <include file="$(find autoinspect_jackal_bringup)/launch/sensors/hesai.launch"/>
+
+  <!-- Microstrain IMU -->
+  <include file="$(find autoinspect_jackal_bringup)/launch/sensors/microstrain.launch"/>
+
+  <!-- Realsense camera -->
+  <include file="$(find autoinspect_jackal_bringup)/launch/sensors/realsense.launch"/>
+
+</launch>

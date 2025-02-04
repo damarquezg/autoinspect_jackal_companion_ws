@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+  <!-- Launch Hesai XT-32 lidar -->
+
+  <include file="$(find hesai_lidar)/launch/hesai_lidar.launch">
+    <arg name="lidar_type" value="PandarXT-32"/>
+    <arg name="frame_id" value="pandar"/>
+  </include>
+
+</launch>

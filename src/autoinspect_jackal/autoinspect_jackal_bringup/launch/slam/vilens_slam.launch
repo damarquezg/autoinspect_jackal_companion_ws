@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<launch>
+  <!-- Launch Vilens SLAM -->
+
+  <!-- Configuration file for Vilens SLAM -->
+  <arg name="vilens_slam_config" default="$(find autoinspect_jackal_bringup)/config/slam/vilens_slam.yaml"/>
+
+  <!-- Launch Vilens SLAM node -->
+  <node name="vilens_slam" pkg="vilens_slam" type="vilens_slam_node" output="screen">
+    <rosparam file="$(arg vilens_slam_config)" subst_value="true" />
+  </node>
+</launch>

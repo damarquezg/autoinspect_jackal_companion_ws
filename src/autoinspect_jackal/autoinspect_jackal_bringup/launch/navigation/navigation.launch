@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+  <!-- Launch the ROS navigation and topological navigation stacks -->
+
+  <!-- Map of the environment -->
+  <arg name="map"/>
+  <!-- Topological map to be used -->
+  <arg name="topo_map"/>
+  <!-- Overlay to use to determine shortest path between nodes -->
+  <arg name="cost_overlay_name" default="min_distance"/>
+  <!-- The number of times a failed traversal to a node will be retried if it fails -->
+  <arg name="traversal_retries" default="3"/>
+  <!-- If an edge traversal fails, the edge failure monitor will reset its traversibility to valid after this time -->
+  <arg name="edge_failure_timeout" default="30"/>
+
+  <!-- Launch ROS navigation stack -->
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map)"/>
+  <!-- We only need this for running on an existing map -->
+  <include file="$(find autoinspect_jackal_bringup)/launch/navigation/move_base.launch"/>
+  <!-- Convert 3D point cloud to 2D laser scan -->
+  <include file="$(find autoinspect_jackal_bringup)/launch/navigation/laserscan.launch"/>
+
+  <!-- Start topological navigation stack -->
+  <include file="$(find ori_topological_jackal)/launch/ori_topological_jackal.launch">
+    <arg name="topo_map" value="$(arg topo_map)"/>
+    <arg name="cost_overlay_name" value="$(arg cost_overlay_name)"/>
+    <arg name="traversal_retries" value="$(arg traversal_retries)"/>
+    <arg name="edge_failure_timeout" value="$(arg edge_failure_timeout)"/>
+  </include>
+
+</launch>

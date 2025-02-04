@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+  <!-- Launch place recognition with Vilens Loco -->
+
+  <!-- Configuration file for Vilens -->
+  <arg name="vilens_config" default="$(find autoinspect_jackal_bringup)/config/odometry/vilens.yaml"/>
+  <!-- The path to the map that Vilens Loco should localize against, e.g. ~/vilens_slam_data/online_slam_output -->
+  <arg name="map"/>
+
+  <node name="omni_matching_place_recognition" pkg="vilens_loco" type="omni_matching_place_recognition" output="screen">
+    <rosparam file="$(find autoinspect_jackal_bringup)/config/localization/vilens_loco/vilens_loco.yaml" subst_value="true"/>
+    <param name="prior_map_folder" type="string" value="$(arg map)"/>
+  </node>
+
+  <!-- Launch Vilens odometry -->
+  <node name="base_vilens_optimized_transform_publisher" pkg="tf2_ros" type="static_transform_publisher" 
+        args="0 0 0 0 0 0 1 base_vilens_optimized base" output="screen"/>
+  <include file="$(find autoinspect_jackal_bringup)/launch/odometry/tf_bridge_odom_vilens_odom_icp.launch"/>
+  <include file="$(find autoinspect_jackal_bringup)/launch/odometry/vilens.launch">
+    <arg name="vilens_config" value="$(arg vilens_config)"/>
+  </include>
+
+  <!-- Launch tf bridge -->
+  <include file="$(find autoinspect_jackal_bringup)/launch/localization/vilens_loco/tf_bridge_odom_vilens_map_omni.launch"/>
+
+</launch>
+

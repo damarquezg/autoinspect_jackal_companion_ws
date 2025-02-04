@@ -1,0 +1,78 @@
+group "1.drivers" {
+    cmd "depth_camera" {
+        exec = "roslaunch autoinspect_jackal_bringup realsense.launch";
+        host = "jackal";
+    }
+    cmd "imu" {
+        exec = "roslaunch autoinspect_jackal_bringup microstrain.launch";
+        host = "jackal";
+    }
+    cmd "lidar" {
+        exec = "roslaunch autoinspect_jackal_bringup hesai.launch";
+        host = "jackal";
+    }
+    cmd "lidar_to_laserscan" {
+        exec = "roslaunch autoinspect_jackal_bringup laserscan.launch";
+        host = "jackal";
+    }
+}
+
+group "2.move_base" {
+    cmd "move_base" {
+        exec = "roslaunch autoinspect_jackal_bringup move_base.launch";
+        host = "jackal";
+    }
+}
+
+group "3.mapping" {
+    cmd "gmapping" {
+        exec = "roslaunch jackal_navigation gmapping.launch config:=gmapping scan_topic:=/scan";
+        host = "jackal";
+    }
+    cmd "run_map_saver" {
+        exec = "rosrun map_server map_saver -f /home/ori/maps/map";
+        host = "jackal";
+    }
+}
+
+group "4.localization" {
+    cmd "amcl" {
+        exec = "roslaunch autoinspect_jackal_bringup amcl.launch map_file:=/home/ori/maps/map.yaml scan_topic:=/scan";
+        host = "jackal";
+    }
+}
+
+group "8.visualization" {
+    cmd "rviz" {
+        exec = "roslaunch autoinspect_jackal_bringup view_robot.launch";
+        host = "localhost";
+    }
+}
+
+group "9.shutdown" {
+    cmd "shutdown" {
+        exec = "sudo poweroff";
+        host = "jackal";
+    }
+}
+
+
+script "start_mapping" {
+    start group "1.drivers";
+    start group "2.move_base";
+    wait ms 5000;
+    start cmd "gmapping";
+    start group "8.visualization";
+}
+
+script "save_map" {
+    start cmd "run_map_saver";
+}
+
+script "start_localization" {
+    start group "1.drivers";
+    wait ms 5000;
+    start group "2.move_base";
+    start group "4.localization";
+    start group "8.visualization";
+}

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Launch the Gazebo simulation for reactor room map -->
+
+  <!-- Gazebo simulation world to be used -->
+  <arg name="world_name" default="$(find gazebo_worlds_drs)/worlds/or_reactor_room.world"/>
+  <!-- ROS navigation map to be used -->
+  <arg name="map" default="$(find autoinspect_jackal_bringup)/maps/or_reactor_room.yaml"/>
+  <!-- Topological map to be used -->
+  <arg name="topo_map" default="$(find autoinspect_jackal_bringup)/maps/or_reactor_room_topo.yaml"/>
+  <!-- Launch RViz for visualization -->
+  <arg name="rviz" default="true"/>
+
+  <!-- Initial position of the robot inside the simulaton environment -->
+  <arg name="x" default="-8.0"/>
+  <arg name="y" default="2.0"/>
+  <arg name="z" default="0.0"/>
+  <arg name="yaw" default="0.0"/>
+
+  <!-- Launch Gazebo simulation together with the navigation -->
+  <include file="$(find autoinspect_jackal_bringup)/launch/simulation/jackal_sim.launch">
+    <arg name="world_name" value="$(arg world_name)"/>
+    <arg name="map" value="$(arg map)"/>
+    <arg name="topo_map" value="$(arg topo_map)"/>
+    <arg name="rviz" value="$(arg rviz)"/>
+    <arg name="x" value="$(arg x)"/>
+    <arg name="y" value="$(arg y)"/>
+    <arg name="z" value="$(arg z)"/>
+    <arg name="yaw" value="$(arg yaw)"/>
+  </include>
+
+</launch>

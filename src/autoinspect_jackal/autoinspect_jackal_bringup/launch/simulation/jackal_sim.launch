@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Launch the Gazebo simulation with the navigation stack -->
+
+  <!-- Gazebo simulation world to be used -->
+  <arg name="world_name"/>
+  <!-- ROS navigation map to be used -->
+  <arg name="map"/>
+  <!-- Topological map to be used -->
+  <arg name="topo_map"/>
+  <!-- Launch RViz for visualization -->
+  <arg name="rviz" default="true"/>
+  
+  <!-- Initial position of the robot inside the simulaton environment -->
+  <arg name="x" default="0.0"/>
+  <arg name="y" default="0.0"/>
+  <arg name="z" default="0.0"/>
+  <arg name="yaw" default="0.0"/>
+
+  <!-- Overlay to use to determine shortest path between nodes -->
+  <arg name="cost_overlay_name" default="min_distance"/>
+  <!-- The number of times a failed traversal to a node will be retried if it fails -->
+  <arg name="traversal_retries" default="3"/>
+  <!-- If an edge traversal fails, the edge failure monitor will reset its traversibility to valid after this time -->
+  <arg name="edge_failure_timeout" default="30"/>
+
+  <!-- Launch Gazebo simulation -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(arg world_name)"/>
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+
+  <!-- Spawn Husky -->
+  <include file="$(find autoinspect_jackal_bringup)/launch/simulation/spawn_jackal.launch">
+    <arg name="x" value="$(arg x)"/>
+    <arg name="y" value="$(arg y)"/>
+    <arg name="z" value="$(arg z)"/>
+    <arg name="yaw" value="$(arg yaw)"/>
+  </include>
+
+  <!-- Robot state publisher -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+  <!-- Launch navigation stack -->
+  <include file="$(find autoinspect_jackal_bringup)/launch/navigation/navigation.launch">
+    <arg name="map" value="$(arg map)"/>
+    <arg name="topo_map" value="$(arg topo_map)"/>
+    <arg name="cost_overlay_name" value="$(arg cost_overlay_name)"/>
+    <arg name="traversal_retries" value="$(arg traversal_retries)"/>
+    <arg name="edge_failure_timeout" value="$(arg edge_failure_timeout)"/>
+  </include>
+
+  <!-- Visualize the Jackal -->
+  <group if="$(arg rviz)">
+    <include file="$(find autoinspect_jackal_bringup)/launch/visualization/view_robot.launch"/>
+  </group>
+
+</launch>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+  <!-- Launch Vilens odometry -->
+
+  <!-- Configuration file for Vilens -->
+  <arg name="vilens_config" default="$(find autoinspect_jackal_bringup)/config/odometry/vilens.yaml"/>
+
+  <!-- Launch Vilens odometry node -->
+  <include file="$(find vilens_ros)/launch/node.launch">
+    <arg name="vilens_config" value="$(arg vilens_config)" />
+  </include>
+</launch>

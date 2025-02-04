@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Load the robot description to the parameter server -->
+
+  <!-- Simulated or real robot -->
+  <arg name="simulation" default="true"/>
+  <!-- Xacro URDF to be loaded -->
+  <arg name="model" default="$(find autoinspect_jackal_description)/urdf/autoinspect_jackal.urdf.xacro" />
+
+  <param name="robot_description" command="xacro $(arg model) simulation:=$(arg simulation)" />
+</launch>

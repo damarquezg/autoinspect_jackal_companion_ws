@@ -1,0 +1,541 @@
+map:
+  edges:
+  - action_server: default
+    edge_id: Node1_Node2
+    end_id: Node2
+    start_id: Node1
+    tags: []
+  - action_server: default
+    edge_id: Node2_Node1
+    end_id: Node1
+    start_id: Node2
+    tags: []
+  - action_server: default
+    edge_id: Node1_Node3
+    end_id: Node3
+    start_id: Node1
+    tags: []
+  - action_server: default
+    edge_id: Node3_Node1
+    end_id: Node1
+    start_id: Node3
+    tags: []
+  - action_server: default
+    edge_id: Node3_Node4
+    end_id: Node4
+    start_id: Node3
+    tags: []
+  - action_server: default
+    edge_id: Node4_Node3
+    end_id: Node3
+    start_id: Node4
+    tags: []
+  - action_server: default
+    edge_id: Node4_Node5
+    end_id: Node5
+    start_id: Node4
+    tags: []
+  - action_server: default
+    edge_id: Node5_Node4
+    end_id: Node4
+    start_id: Node5
+    tags: []
+  - action_server: default
+    edge_id: Node5_Node6
+    end_id: Node6
+    start_id: Node5
+    tags: []
+  - action_server: default
+    edge_id: Node6_Node5
+    end_id: Node5
+    start_id: Node6
+    tags: []
+  - action_server: default
+    edge_id: Node6_Node7
+    end_id: Node7
+    start_id: Node6
+    tags: []
+  - action_server: default
+    edge_id: Node7_Node6
+    end_id: Node6
+    start_id: Node7
+    tags: []
+  - action_server: default
+    edge_id: Node7_Node8
+    end_id: Node8
+    start_id: Node7
+    tags: []
+  - action_server: default
+    edge_id: Node8_Node7
+    end_id: Node7
+    start_id: Node8
+    tags: []
+  - action_server: default
+    edge_id: Node8_Node9
+    end_id: Node9
+    start_id: Node8
+    tags: []
+  - action_server: default
+    edge_id: Node9_Node8
+    end_id: Node8
+    start_id: Node9
+    tags: []
+  - action_server: default
+    edge_id: Node9_Node2
+    end_id: Node2
+    start_id: Node9
+    tags: []
+  - action_server: default
+    edge_id: Node2_Node9
+    end_id: Node9
+    start_id: Node2
+    tags: []
+  - action_server: default
+    edge_id: Node2_Node11
+    end_id: Node11
+    start_id: Node2
+    tags: []
+  - action_server: default
+    edge_id: Node11_Node2
+    end_id: Node2
+    start_id: Node11
+    tags: []
+  - action_server: default
+    edge_id: Node11_Node1
+    end_id: Node1
+    start_id: Node11
+    tags: []
+  - action_server: default
+    edge_id: Node1_Node11
+    end_id: Node11
+    start_id: Node1
+    tags: []
+  - action_server: default
+    edge_id: Node11_Node10
+    end_id: Node10
+    start_id: Node11
+    tags: []
+  - action_server: default
+    edge_id: Node10_Node11
+    end_id: Node11
+    start_id: Node10
+    tags: []
+  - action_server: default
+    edge_id: Node7_Node10
+    end_id: Node10
+    start_id: Node7
+    tags: []
+  - action_server: default
+    edge_id: Node10_Node7
+    end_id: Node7
+    start_id: Node10
+    tags: []
+  name: or_reactor_room
+  nodes:
+  - edge_ids:
+    - Node1_Node2
+    - Node2_Node1
+    - Node1_Node3
+    - Node1_Node11
+    node_id: Node1
+    tags: []
+  - edge_ids:
+    - Node1_Node2
+    - Node2_Node1
+    - Node2_Node9
+    - Node2_Node11
+    node_id: Node2
+    tags: []
+  - edge_ids:
+    - Node3_Node1
+    - Node3_Node4
+    node_id: Node3
+    tags: []
+  - edge_ids:
+    - Node4_Node3
+    - Node4_Node5
+    node_id: Node4
+    tags: []
+  - edge_ids:
+    - Node5_Node4
+    - Node5_Node6
+    node_id: Node5
+    tags: []
+  - edge_ids:
+    - Node6_Node5
+    - Node6_Node7
+    node_id: Node6
+    tags: []
+  - edge_ids:
+    - Node7_Node6
+    - Node7_Node8
+    - Node7_Node10
+    node_id: Node7
+    tags: []
+  - edge_ids:
+    - Node8_Node7
+    - Node8_Node9
+    node_id: Node8
+    tags: []
+  - edge_ids:
+    - Node9_Node8
+    - Node9_Node2
+    node_id: Node9
+    tags: []
+  - edge_ids:
+    - Node10_Node11
+    - Node10_Node7
+    node_id: Node10
+    tags: []
+  - edge_ids:
+    - Node11_Node2
+    - Node11_Node1
+    - Node11_Node10
+    node_id: Node11
+    tags: []
+overlays:
+  edge_validity:
+    msg:
+      default_value: true
+      graph_ids: []
+      header:
+        frame_id: ''
+        seq: 2
+        stamp:
+          nsecs: 0
+          secs: 0
+      use_default: true
+      values: []
+    type: BoolOverlay
+  min_distance:
+    msg:
+      default_value: 0.0
+      graph_ids:
+      - Node1_Node2
+      - Node2_Node1
+      - Node1_Node3
+      - Node3_Node1
+      - Node3_Node4
+      - Node4_Node3
+      - Node4_Node5
+      - Node5_Node4
+      - Node5_Node6
+      - Node6_Node5
+      - Node6_Node7
+      - Node7_Node6
+      - Node7_Node8
+      - Node8_Node7
+      - Node8_Node9
+      - Node9_Node8
+      - Node9_Node2
+      - Node2_Node9
+      - Node2_Node11
+      - Node11_Node2
+      - Node11_Node1
+      - Node1_Node11
+      - Node11_Node10
+      - Node10_Node11
+      - Node7_Node10
+      - Node10_Node7
+      header:
+        frame_id: ''
+        seq: 55
+        stamp:
+          nsecs: 578000000
+          secs: 407
+      use_default: false
+      values:
+      - 6.980426075773497
+      - 6.980426075773497
+      - 6.194339364978372
+      - 6.194339364978372
+      - 5.188838134210704
+      - 5.188838134210704
+      - 5.4938074431973085
+      - 5.4938074431973085
+      - 4.075583390566391
+      - 4.075583390566391
+      - 7.7375327657555735
+      - 7.7375327657555735
+      - 4.563179536340007
+      - 4.563179536340007
+      - 3.6505963710508125
+      - 3.6505963710508125
+      - 6.235782843005415
+      - 6.235782843005415
+      - 6.28356310798197
+      - 6.28356310798197
+      - 3.561244003612956
+      - 3.561244003612956
+      - 4.448263939440163
+      - 4.448263939440163
+      - 2.8683998639529475
+      - 2.8683998639529475
+    type: FloatOverlay
+  min_duration:
+    msg:
+      default_value: 0.0
+      graph_ids: []
+      header:
+        frame_id: ''
+        seq: 0
+        stamp:
+          nsecs: 0
+          secs: 0
+      use_default: false
+      values: []
+    type: FloatOverlay
+  node_poses:
+    msg:
+      default_value:
+        header:
+          frame_id: ''
+          seq: 0
+          stamp:
+            nsecs: 0
+            secs: 0
+        pose:
+          orientation:
+            w: 0.0
+            x: 0.0
+            y: 0.0
+            z: 0.0
+          position:
+            x: 0.0
+            y: 0.0
+            z: 0.0
+      graph_ids:
+      - Node1
+      - Node2
+      - Node3
+      - Node4
+      - Node5
+      - Node6
+      - Node7
+      - Node8
+      - Node9
+      - Node10
+      - Node11
+      header:
+        frame_id: ''
+        seq: 31
+        stamp:
+          nsecs: 578000000
+          secs: 407
+      use_default: false
+      values:
+      - header:
+          frame_id: map
+          seq: 0
+          stamp:
+            nsecs: 337000000
+            secs: 295
+        pose:
+          orientation:
+            w: 0.8383630439929708
+            x: 4.3341404752144836e-05
+            y: -5.2948245342209394e-05
+            z: 0.5451342023930843
+          position:
+            x: 5.066982746124268
+            y: 2.879267692565918
+            z: 0.00033129952498711646
+      - header:
+          frame_id: map
+          seq: 0
+          stamp:
+            nsecs: 275000000
+            secs: 323
+        pose:
+          orientation:
+            w: 0.9381935148606816
+            x: -5.022516657685168e-05
+            y: -3.553903858069192e-05
+            z: 0.3461390570339894
+          position:
+            x: -0.7708350419998169
+            y: -0.9477718472480774
+            z: 0.0001504656538600102
+      - header:
+          frame_id: map
+          seq: 0
+          stamp:
+            nsecs: 341000000
+            secs: 284
+        pose:
+          orientation:
+            w: 0.9919275359520847
+            x: 9.979203965330085e-05
+            y: -3.4588386211606276e-05
+            z: 0.12695783029356095
+          position:
+            x: 10.845991134643555
+            y: 5.1092681884765625
+            z: 0.0002845806011464447
+      - header:
+          frame_id: map
+          seq: 0
+          stamp:
+            nsecs: 439000000
+            secs: 264
+        pose:
+          orientation:
+            w: 0.9928106632191401
+            x: 1.7697416178460248e-06
+            y: -0.00011732639304017851
+            z: -0.11975020972306044
+          position:
+            x: 15.14924144744873
+            y: 2.209944486618042
+            z: 0.00029950655880384147
+      - header:
+          frame_id: map
+          seq: 0
+          stamp:
+            nsecs: 491000000
+            secs: 272
+        pose:
+          orientation:
+            w: 0.9907006301370801
+            x: -2.7205460705234048e-05
+            y: -7.55499096937272e-05
+            z: 0.13609448667527918
+          position:
+            x: 15.480193138122559
+            y: -3.273885488510132
+            z: 0.00022700817498844117
+      - header:
+          frame_id: map
+          seq: 0
+          stamp:
+            nsecs: 576000000
+            secs: 407
+        pose:
+          orientation:
+            w: 0.9405836886857165
+            x: -6.664286774453689e-07
+            y: -4.2271283473797023e-05
+            z: 0.33959000709445686
+          position:
+            x: 15.284561157226562
+            y: -7.344770908355713
+            z: 0.00022711162455379963
+      - header:
+          frame_id: map
+          seq: 0
+          stamp:
+            nsecs: 695000000
+            secs: 389
+        pose:
+          orientation:
+            w: 0.009990470389996411
+            x: -3.7223372802595813e-05
+            y: -1.1778899420399512e-05
+            z: -0.9999609552447984
+          position:
+            x: 7.553679466247559
+            y: -7.663100242614746
+            z: 0.03957194834947586
+      - header:
+          frame_id: map
+          seq: 0
+          stamp:
+            nsecs: 169000000
+            secs: 392
+        pose:
+          orientation:
+            w: 0.9868730368921842
+            x: 1.924289913164698e-05
+            y: -3.732013501606571e-05
+            z: 0.16153896802210713
+          position:
+            x: 2.9961585998535156
+            y: -7.4393744468688965
+            z: 0.00010295326501363888
+      - header:
+          frame_id: map
+          seq: 0
+          stamp:
+            nsecs: 213000000
+            secs: 361
+        pose:
+          orientation:
+            w: 0.96430668027907
+            x: 1.2406401953242805e-05
+            y: -4.3501929422568566e-05
+            z: 0.264816019422937
+          position:
+            x: -0.6453744173049927
+            y: -7.182292461395264
+            z: 5.802278974442743e-05
+      - header:
+          frame_id: map
+          seq: 0
+          stamp:
+            nsecs: 999000000
+            secs: 400
+        pose:
+          orientation:
+            w: 0.9897052435503745
+            x: -6.584874869514441e-05
+            y: -8.17606128469823e-05
+            z: -0.14317549849270178
+          position:
+            x: 6.531895160675049
+            y: -4.983148097991943
+            z: 0.00044248448102734983
+      - header:
+          frame_id: map
+          seq: 0
+          stamp:
+            nsecs: 418000000
+            secs: 315
+        pose:
+          orientation:
+            w: 0.998503199481207
+            x: -9.079562948796998e-05
+            y: -0.00011147156704095231
+            z: 0.05489289853911978
+          position:
+            x: 5.505895614624023
+            y: -0.6548254489898682
+            z: 0.00021321943495422602
+    type: PoseOverlay
+  node_zones:
+    msg:
+      default_value:
+        points:
+        - x: 0.692909649383465
+          y: 0.2870125742738173
+          z: 0.0
+        - x: 0.2870125742738174
+          y: 0.692909649383465
+          z: 0.0
+        - x: -0.2870125742738173
+          y: 0.692909649383465
+          z: 0.0
+        - x: -0.692909649383465
+          y: 0.28701257427381743
+          z: 0.0
+        - x: -0.6929096493834651
+          y: -0.28701257427381727
+          z: 0.0
+        - x: -0.28701257427381777
+          y: -0.6929096493834649
+          z: 0.0
+        - x: 0.2870125742738169
+          y: -0.6929096493834652
+          z: 0.0
+        - x: 0.6929096493834649
+          y: -0.28701257427381777
+          z: 0.0
+      graph_ids: []
+      header:
+        frame_id: ''
+        seq: 2
+        stamp:
+          nsecs: 0
+          secs: 0
+      use_default: true
+      values: []
+    type: PointListOverlay

@@ -1,0 +1,105 @@
+active_modules : ["imu", "icp"]
+
+##### Physical sensor properties
+sensors:
+  imus:
+    alphasense_imu:
+      config_file: "vilens-imu.yaml"
+      topic:       "/microstrain/imu/data"
+      timeshift:   0
+      # Generated with data_tools_algorithms get_tf.py
+      B_r_BI: [0.120000000, 0.000000000, 0.194000000]
+      q_BI: [0.000000000, 1.000000000, 0.000000000, 0.000000000]
+      rate: 500
+  lidars:
+    hesai_lidar:
+      model:  "HESAI_QT64"
+      # Generated with data_tools_algorithms get_tf.py
+      B_r_BL: [0.120000000, 0.000000000, 0.243400000]
+      q_BL: [0.000000000, 0.000000000, 0.707106781, 0.707106781]
+      topic: "/hesai/pandar"
+      rate: 10
+      timeshift: 0
+      raw: false
+      undistort: false
+      max_range: 70
+      min_range: 1.0
+
+# Module parameters (vilens algorithm parameters)
+# Each module links to the sensor/s that it requires as an input.
+modules:
+  imu:
+    sensor_id: "alphasense_imu"
+  icp:
+    sensor_id: "hesai_lidar"
+    fixed_frame: "odom_icp_vilens"
+    # the path is relative to the directory where the current yaml is stored
+    registration_config_file: "./icp_registration_config_hesai.yaml"
+    map_from_file_path: ""
+    load_map_from_file: "false"
+    localize_against_prior_map: "false"
+    localize_against_built_map: "false"
+    merge_registered_clouds_to_map: "false"
+    crop_map_around_base: 60.0
+    #prefilter_voxel_size: 0.10 # usally 0.15 outdoors. 0.08 in corsham mine worked well
+    max_reading_cloud_size: 30000
+    max_reference_cloud_size: 300000
+    prefilter_voxel_size: 0.10 # usally 0.15 outdoors. 0.08 in corsham mine worked well.
+    local_map_add_last_scan: "false"
+    process_one_in: 1
+    local_map_dist_threshold_dense: 0.25
+    local_map_max_dist_dense: 4.0
+    local_map_dist_threshold_sparse: 2.0
+    local_map_max_dist_sparse: 20.0
+    local_map_max_height_diff: 10000.0 # 2.5 for indoor multifloor. use large value for drones/failsafe
+    reading_dist_threshold: 0.25 # very low - for narrow spaces
+    online_calibration: false
+    #position_noise: 1e-6
+    #rotation_noise: 1e-6
+    localize_to_local_map_frame: false # recommended by david but causes crashes
+    calculate_covariance: true
+
+##### Initialization Parameters
+initialization:
+  # imu or config_file
+  initialization_type: "imu"
+  W_r_WI_0: [0,0,0]
+  q_WI_0: [0,0,0,1]
+  W_v_WI_0: [0,0,0]
+  prior_position_noise:    1e-6
+  prior_orientation_noise: 1e-3
+  prior_velocity_noise:    1e-2
+  prior_bias_acc_noise:    1e-1
+  prior_bias_gyr_noise:    1e-1
+  max_initial_acc_bias:    1.0 # we are using the alphasense IMU which can have high biases
+  imu_bias_init_type : "online" # config_file
+  # bias_acc_0: [0,0,0]
+  # bias_gyr_0: [0,0,0]
+
+##### Optimization parameters
+optimization:
+  optimizer_type: "fixed_lag_gauss_newton"
+  lag_time: 20.0
+  isam2:
+    enable_detailed_results: false
+    evaluate_nonlinear_error: false
+    factorization: "Cholesky"
+    num_iterations: 0
+    relinearize_skip: 3
+    relinearize_threshold: 0.5
+    min_keys_for_marginalization: 500
+    min_landmarks_for_marginalization: 10
+
+##### Output parameters
+output:
+  console:
+    ros_output_level: "info"
+    timing_mode: false
+  save_to_file:
+    csv: true
+    images: false
+  tf:
+    publish_tf: true
+    base_frame: "base_vilens"
+    fixed_frame: "odom_vilens"
+    publish_extrinsics_tf: true

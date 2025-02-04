@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<robot name="autoinspect_jackal" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find jackal_description)/urdf/jackal.urdf.xacro" />
+
+  <xacro:include filename="$(find autoinspect_jackal_description)/urdf/extras.urdf.xacro" />
+</robot>
+
